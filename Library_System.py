@@ -75,10 +75,10 @@ def editBooks(title_or_id):
                     if new_title:
                         book["title"] = new_title
                         book["updated_at"] = datetime.now()
-                        print("--- Título atualizado com sucesso! ---")
+                        print("\n--- Título atualizado com sucesso! ---\n")
                         break
                     else: 
-                        print("Título não pode ser vazio")
+                        print("\n--- Título não pode ser vazio ---\n")
 
                 elif option == 2:
                     new_author = input("Digite o novo autor do livro: ")
@@ -88,7 +88,7 @@ def editBooks(title_or_id):
                         print("--- Autor atualizado com sucesso! ---")
                         break
                     else:
-                        print("--- Autor não pode ser vazio ---")
+                        print("\n--- Autor não pode ser vazio ---\n")
                 elif option == 3:
                     break
                 else:
@@ -141,7 +141,7 @@ def listStudent():
                             loan_date = loan["loan_date"].strftime("%d/%m/%Y %H:%M:%S")
                             borrowed_titles_date.append(f"{book['title']} (Emprestimo: {loan_date})")
             borrowed_books_str = ', '.join(borrowed_titles_date) if borrowed_titles_date else "Nenhum livro emprestado"
-            print(f"\nID: {student['id']} \nNome: {student['name']} \nData de Nascimento: {student['dateBirth'].strftime("%d/%m/%Y")} \nE-mail: {student['email']} \nLivros Emprestados: {borrowed_books_str}")
+            print(f"\nID: {student['id']} \nNome: {student['name']} \nData de Nascimento: {student['dateBirth'].strftime("%d/%m/%Y")} \nE-mail: {student['email']} \nLivros Emprestados: {borrowed_books_str}\n")
 
 def editStudents(name_or_id):
     for student in students:
@@ -161,26 +161,26 @@ def editStudents(name_or_id):
                     new_students = input("Digite o novo nome do Aluno: ")
                     if new_students:
                         student["name"] = new_students
-                        print("--- Nome atualizado com sucesso! ---")
+                        print("\n--- Nome atualizado com sucesso! ---\n")
                         break
                     else:
-                        print("--- É obrigatório digitar nome ---")
+                        print("\n--- É obrigatório digitar nome ---\n")
                 elif option == 2:
                     new_date = tryDate("Digite a nova data de nascimento DD/MM/AAAA: ")
                     if new_date:
                         student["dateBirth"] = new_date
-                        print("--- Data de Nascimento atualizado com sucesso! ---")
+                        print("\n--- Data de Nascimento atualizado com sucesso! ---\n")
                         break
                     else:
-                        print("--- Data de Nascimento não pode está em branco")
+                        print("\n--- Data de Nascimento não pode está em branco ---\n")
                 elif option == 3:
                     new_email = input("Digite o novo e-mail: ")
                     if new_email:
                         student["email"] = new_email
-                        print("--- E-mail Atualizado com sucesso! ---")
+                        print("\n--- E-mail Atualizado com sucesso! ---\n")
                         break
                     else:
-                        print("E-mail não pode está em branco")
+                        print("\n--- E-mail não pode está em branco ---\n")
                 elif option == 4:
                     break
                 else:
@@ -194,10 +194,10 @@ def bookAvilable(title_or_id):
     for book in books:
         if str(book["id"]) == title_or_id or book["title"].lower() == title_or_id.lower():
             if book["isAvailable"]:
-                print("Livro Disponivel para empréstimo")
+                print("\n--- Livro Disponivel para empréstimo ---\n")
                 return True
             else:
-                print("Livro não está disponível para empréstimo")
+                print("\n--- Livro não está disponível para empréstimo ---\n")
                 return False
     print("Livro Não encontrado")
     return False
@@ -210,10 +210,10 @@ def loanBook(title_or_id, student_identifier):
         break
 
     if not book_found:
-        print("Livro Não encontrado")
+        print("\n--- Livro Não encontrado ---\n")
         return False
     if not book_found["isAvailable"]:
-        print("O Livro não está disponível para empréstimo")
+        print("\n--- O Livro não está disponível para empréstimo ---\n")
         return False
 
     student_found = None
@@ -223,7 +223,7 @@ def loanBook(title_or_id, student_identifier):
             break
 
     if not student_found:
-        print("Aluno não encontrado")
+        print("\n--- Aluno não encontrado ---\n")
         return False
 
     loan = {
@@ -237,7 +237,7 @@ def loanBook(title_or_id, student_identifier):
     book["updated_at"] = datetime.now()
     student_found["borrowed_books"].append(book_found["id"])
     
-    print("--- Empréstimo realizado com sucesso ---")
+    print("\n--- Empréstimo realizado com sucesso ---\n")
     return True
 
 def returnBook(title_or_id):
@@ -248,7 +248,7 @@ def returnBook(title_or_id):
             break
 
     if book_id is None:
-        print("Livro não encontrado")
+        print("\n--- Livro não encontrado ---\n")
         return
 
     for loan in loans:
@@ -265,7 +265,7 @@ def returnBook(title_or_id):
                             student["borrowed_books"].remove(book_id)
                     print(f"--- Empréstimo do livro --- \nID: {book['id']} \nTítulo: {book['title']} \nAutor: {book['author']['name']} \n--- EMPRÉSTIMO FINALIZADO! ---")
                     return
-    print("Empréstimo não encontraddo ou já foi devolvido")
+    print("\n--- Empréstimo não encontrado ou já foi devolvido ---\n")
 
 def listStudentHistory(student_identifier):
     student_found = None
@@ -274,7 +274,7 @@ def listStudentHistory(student_identifier):
             student_found = student
             break
     if not student_found:
-        print("Aluno não encontrado")
+        print("\n--- Aluno não encontrado ---\n")
         return
 
     found_loans = None
@@ -444,6 +444,7 @@ def tryDate(prompt):
             return valid_date
         except ValueError:
             print("--- Data inválida, insina a data no formato DD/MM/AAAA ---")
+
 # Função de confirmação
 def confirm(action):
     response = input(f"{action} (S/N): ").lower()
@@ -500,7 +501,7 @@ def finalizarEmpréstimo():
 
 def historicoEmprestimoAluno():
     listStudent()
-    student_identifier = input("Digite o ID ou nome do Aluno para ver o histórico: ")
+    student_identifier = input("\nDigite o ID ou nome do Aluno para ver o histórico: ")
     listStudentHistory(student_identifier)
 
 def historicoEmprestimoLivro():
@@ -509,15 +510,15 @@ def historicoEmprestimoLivro():
     bookLoanHistory(book_identifier)
 
 def buscarLivroAutor():
-    authorBook = input("Bucar pelo nome do Autor: ")
+    authorBook = input("Digite o nome do Autor: ")
     authorTheBook(authorBook)
 
 def excluirAluno():
-    name_or_id = input("Digite o nome do Aluno ou ID: ")
+    name_or_id = input("Digite o ID ou nome do Aluno: ")
     deleteStudents(name_or_id)
 
 def editarAluno():
-    name_or_id = input("Digite o nome do Aluno ou ID: ")
+    name_or_id = input("Digite o ID ou nome do Aluno: ")
     editStudents(name_or_id)
 
 def editarAutor():
