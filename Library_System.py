@@ -278,7 +278,7 @@ def listStudentHistory(student_identifier):
         return
 
     found_loans = None
-    print(f"\n--- Histórico do Aluno: {student_found['name']} (ID: {student_found["id"]}) ---")
+    print(f"\n--- Histórico do Aluno: {student_found['name']} (ID: {student_found['id']}) ---")
     for loan in loans:
         if loan["student_id"] == student_found["id"]:
             found_loans = True
@@ -325,7 +325,7 @@ def bookLoanHistory(book_identifier):
             return_date = loan["return_date"].strftime("%d/%m/%Y %H:%M:%S") if loan["return_date"] else "Ainda Não Devolvido"
 
             if student_found:
-                print(f"\nEmprestado para Aluno: {student_found['name']} (ID: {student_found["id"]}) \nData do Empréstimo: {loan_date} \nData de Entrega: {return_date}\n")
+                print(f"\nEmprestado para Aluno: {student_found['name']} (ID: {student_found['id']}) \nData do Empréstimo: {loan_date} \nData de Entrega: {return_date}\n")
     if not found_loans:
         print("Nenhum empréstimo registrado para este livro")
 
@@ -405,7 +405,7 @@ def listAuthor():
         print("--- Não existe Autor cadastrado ---")
     else:
         for author in authors:
-            print(f"\nID: {author["id"]} \nAutor: {author["name"]} \nData de Nascimento: {author['dateBirth'].strftime("%d/%m/%Y")}")
+            print(f"\nID: {author['id']} \nAutor: {author['name']} \nData de Nascimento: {author['dateBirth'].strftime("%d/%m/%Y")}")
 
 def deleteAutor(name_or_id):
     global authors
